@@ -67,18 +67,18 @@ interface Medicatie {
 }
 
 const dossierVertalingen: Record<string, string> = {
-  eyes: "Ogen",
-  poop: "Ontlasting",
-  dental: "Gebit",
-  skin: "Huid & Vacht",
-  bcs: "Gewicht",
-  pain: "Comfort",
-  coat: "Vachtglans",
-  nose: "Neus",
-  ticks: "Teken",
-  fleas: "Vlooien",
-  mange: "Infecties",
-  ears: "Oren",
+  eyes: "Ojos",
+  poop: "Heces",
+  dental: "Dentadura",
+  skin: "Piel & Pelaje",
+  bcs: "Peso",
+  pain: "Bienestar",
+  coat: "Brillo del Pelaje",
+  nose: "Nariz",
+  ticks: "Garrapatas",
+  fleas: "Pulgas",
+  mange: "Infecciones",
+  ears: "Oídos",
 };
 
 export default function DashboardPage() {
@@ -120,7 +120,7 @@ function DashboardContent() {
     ? getTrialStatus(user.createdAt, trialEndsAt)
     : { progress: 0, daysLeft: 1, isExpired: false, msLeft: 0 };
 
-  const dogName = dog?.name || "Laden...";
+  const dogName = dog?.name || "Cargando...";
 
   useEffect(() => {
     async function initDashboard() {
@@ -150,7 +150,6 @@ function DashboardContent() {
         if (actieveHond) {
           setDog({ ...actieveHond });
 
-          // VANGRAIL: dwing de URL naar het juiste ID als deze nog leeg was
           if (!dogIdFromUrl) {
             router.replace(`/dashboard?dogId=${actieveHond.id}`, {
               scroll: false,
@@ -186,7 +185,7 @@ function DashboardContent() {
           setMedicaties(Array.isArray(medData) ? medData : []);
         }
       } catch (err) {
-        console.error("Kritieke dashboard fout:", err);
+        console.error("Error crítico del panel:", err);
       } finally {
         setLoading(false);
       }
@@ -205,7 +204,7 @@ function DashboardContent() {
       const data = await res.json();
       setRapportData(data);
     } catch (err) {
-      console.error("Rapport fout:", err);
+      console.error("Error en informe:", err);
     } finally {
       setIsGenerating(false);
     }
@@ -230,8 +229,8 @@ function DashboardContent() {
               <div className="flex-1 min-w-0">
                 <p className="text-[10px] font-black uppercase tracking-wider text-[#1A1A2E] mb-1">
                   {trial.isExpired
-                    ? "Trial verlopen"
-                    : `Trial: ${trial.daysLeft} ${trial.daysLeft === 1 ? "dag" : "dagen"} over`}
+                    ? "Prueba expirada"
+                    : `Prueba: ${trial.daysLeft} ${trial.daysLeft === 1 ? "día" : "días"} restante${trial.daysLeft === 1 ? "" : "s"}`}
                 </p>
                 <Progress
                   value={Math.max(5, trial.progress)}
@@ -242,7 +241,7 @@ function DashboardContent() {
             <button
               onClick={() => setShowPricing(true)}
               className="text-[9px] font-black uppercase tracking-widest bg-[#1A1A2E] text-white px-3 py-1.5 rounded-lg hover:bg-[#4FC3F7] transition-colors shrink-0 text-center">
-              Upgrade naar Pro
+              Actualizar a Pro
             </button>
           </div>
         )}
@@ -253,11 +252,6 @@ function DashboardContent() {
           dogId={dogIdFromUrl || dog?.id}
         />
 
-        {/* 
-          COMPACTE HONDEN SWITCHER SECIE
-          Dit zet de switcher helemaal strak bovenaan de pagina content neer, 
-          met een subtiele scheidingslijn, ideaal voor mobiel én desktop.
-        */}
         {allDogs.length > 0 && (
           <div className="mb-6 pb-2 border-b border-slate-100">
             <DogSwitcher
@@ -285,7 +279,7 @@ function DashboardContent() {
             </div>
             <div className="flex flex-col">
               <p className="text-[9px] font-black uppercase tracking-[0.2em] text-[#4FC3F7] mb-0.5">
-                Welkom terug, {user?.firstName}
+                Bienvenido/a, {user?.firstName}
               </p>
               <h1 className="text-2xl md:text-3xl font-black tracking-tight text-[#111827] uppercase italic leading-none mb-2">
                 {dogName}
@@ -293,7 +287,7 @@ function DashboardContent() {
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-left">
                 {dog?.age && (
                   <span className="text-[10px] font-bold text-slate-600 bg-slate-50 px-2 py-0.5 rounded-md border border-slate-100">
-                    {dog.age} jaar
+                    {dog.age} años
                   </span>
                 )}
                 {dog?.gender && (
@@ -318,14 +312,14 @@ function DashboardContent() {
                     onClick={() => setShowPricing(true)}
                     className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#01579B] hover:bg-[#4FC3F7] text-white font-black uppercase text-[10px] tracking-wider shadow-sm transition-all">
                     <Camera size={14} strokeWidth={2.5} />
-                    <span>Nieuwe scan</span>
+                    <span>Nuevo escaneo</span>
                   </button>
                 ) : (
                   <Link
                     href={`/dashboard/scan?dogId=${dogIdFromUrl || dog?.id}`}>
                     <button className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#01579B] hover:bg-[#4FC3F7] text-white font-black uppercase text-[10px] tracking-wider shadow-sm transition-all">
                       <Camera size={14} strokeWidth={2.5} />
-                      <span>Nieuwe scan</span>
+                      <span>Nuevo escaneo</span>
                     </button>
                   </Link>
                 )}
@@ -341,9 +335,9 @@ function DashboardContent() {
                     dogName={dogName}
                   />
                 }
-                fileName={`Rapport_${dogName}.pdf`}
+                fileName={`Informe_${dogName}.pdf`}
                 className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 rounded-xl text-[10px] font-black uppercase tracking-wider text-white shadow-sm hover:bg-emerald-600">
-                <CheckCircle2 size={14} /> Rapport
+                <CheckCircle2 size={14} /> Informe
               </PDFDownloadLink>
             ) : (
               <button
@@ -355,7 +349,7 @@ function DashboardContent() {
                 ) : (
                   <FileDown size={14} />
                 )}
-                {isGenerating ? "Laden..." : "PDF Rapport"}
+                {isGenerating ? "Cargando..." : "Informe PDF"}
               </button>
             )}
           </div>
@@ -367,15 +361,15 @@ function DashboardContent() {
               <div className="p-4 rounded-xl bg-orange-50 border border-orange-100 flex items-start gap-3 shadow-sm">
                 <AlertTriangle className="text-orange-600 shrink-0" size={20} />
                 <p className="text-xs md:text-sm text-orange-900 font-medium">
-                  Het lijkt erop dat <strong>{dogName}</strong> ergens last van
-                  heeft. Laat dit beoordelen door een arts.
+                  Parece que <strong>{dogName}</strong> tiene algún problema.
+                  Consúltalo con un veterinario.
                 </p>
               </div>
             ) : (
               <div className="p-4 rounded-xl bg-blue-50 border border-blue-100 flex items-start gap-3 shadow-sm">
                 <ShieldCheck className="text-blue-600 shrink-0" size={20} />
                 <p className="text-xs md:text-sm text-blue-900 font-medium">
-                  Alles ziet er goed uit bij <strong>{dogName}</strong>!
+                  ¡Todo parece estar bien con <strong>{dogName}</strong>!
                 </p>
               </div>
             )}
@@ -384,15 +378,15 @@ function DashboardContent() {
 
         <section className="mb-8 md:mb-10 text-left">
           <h2 className="text-md md:text-lg font-bold text-[#111827] mb-3 md:mb-4 tracking-tight text-left">
-            Recente analyses
+            Análisis recientes
           </h2>
           <div className="space-y-2">
             {loading ? (
               <Loader2 className="animate-spin text-[#4FC3F7]" size={24} />
             ) : dossierAlerts.length === 0 ? (
               <div className="p-4 border border-dashed border-slate-200 rounded-xl text-slate-500 bg-slate-50/50 flex items-center gap-3 italic text-xs text-left">
-                <Info size={16} className="text-slate-400" /> Geen actieve
-                meldingen gevonden.
+                <Info size={16} className="text-slate-400" /> No se encontraron
+                alertas activas.
               </div>
             ) : (
               dossierAlerts.map((item) => (
@@ -434,27 +428,27 @@ function DashboardContent() {
                   className={`h-8 w-8 rounded-lg flex items-center justify-center text-white ${!loading && heeftVerlopenVaccinatie ? "bg-red-500" : "bg-[#4FC3F7]"}`}>
                   <Syringe size={16} />
                 </div>
-                <h3 className="text-sm font-bold text-left">Vaccinaties</h3>
+                <h3 className="text-sm font-bold text-left">Vacunas</h3>
               </div>
               <div className="bg-white p-3 rounded-lg border border-slate-100 flex items-center justify-between shadow-sm">
                 <div className="text-left">
                   <p className="text-[8px] font-black uppercase text-slate-400">
-                    Volgende
+                    Siguiente
                   </p>
                   <p className="text-xs font-bold truncate">
-                    {eerstvolgendeVac ? eerstvolgendeVac.type : "Geen planning"}
+                    {eerstvolgendeVac ? eerstvolgendeVac.type : "Sin planificación"}
                   </p>
                 </div>
                 <div className="text-right ml-2 text-left">
                   <p className="text-[8px] font-black uppercase text-slate-400">
-                    Datum
+                    Fecha
                   </p>
                   <p
                     className={`text-xs font-bold ${!loading && heeftVerlopenVaccinatie ? "text-red-600" : "text-[#111827]"}`}>
                     {eerstvolgendeVac
                       ? new Date(
                           eerstvolgendeVac.datum_verloop,
-                        ).toLocaleDateString("nl-NL")
+                        ).toLocaleDateString("es-ES")
                       : "--"}
                   </p>
                 </div>
@@ -469,13 +463,13 @@ function DashboardContent() {
                 <div className="h-8 w-8 rounded-lg bg-[#4FC3F7] flex items-center justify-center text-white">
                   <Pill size={16} />
                 </div>
-                <h3 className="text-sm font-bold text-left">Medicatie</h3>
+                <h3 className="text-sm font-bold text-left">Medicación</h3>
               </div>
               {actieveMedicatie ? (
                 <div className="bg-white p-3 rounded-lg border border-slate-100 flex items-center justify-between shadow-sm">
                   <div className="text-left">
                     <p className="text-[8px] font-black uppercase text-slate-400">
-                      Lopende kuur
+                      Tratamiento activo
                     </p>
                     <p className="text-xs font-bold text-left">
                       {actieveMedicatie.naam}
@@ -483,7 +477,7 @@ function DashboardContent() {
                   </div>
                   <div className="text-right ml-2 text-left">
                     <p className="text-[8px] font-black uppercase text-slate-400">
-                      Schema
+                      Horario
                     </p>
                     <p className="text-[9px] font-bold text-[#4FC3F7]">
                       {actieveMedicatie.frequentie}
@@ -492,7 +486,7 @@ function DashboardContent() {
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-[54px] border border-dashed border-slate-200 rounded-lg bg-white/50 text-slate-400 italic text-xs text-left">
-                  Geen actieve kuren
+                  Sin tratamientos activos
                 </div>
               )}
             </div>

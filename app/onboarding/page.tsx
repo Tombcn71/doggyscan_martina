@@ -21,7 +21,7 @@ export default function OnboardingPage() {
   const [formData, setFormData] = useState({
     name: "",
     image: "",
-    size: "middel",
+    size: "mediano",
     breed: "",
     age: "",
     weight: "",
@@ -55,10 +55,10 @@ export default function OnboardingPage() {
         window.location.href = "/dashboard";
       } else {
         const errorData = await response.json();
-        alert("Fout bij opslaan: " + (errorData.error || "Onbekende fout"));
+        alert("Error al guardar: " + (errorData.error || "Error desconocido"));
       }
     } catch (error) {
-      alert("Er is een netwerkfout opgetreden.");
+      alert("Ha ocurrido un error de red.");
     } finally {
       setIsSubmitting(false);
     }
@@ -66,7 +66,6 @@ export default function OnboardingPage() {
 
   return (
     <div className="h-[100dvh] w-full bg-[#F8FAFC] flex flex-col font-sans text-[#1A1A2E] overflow-hidden">
-      {/* Progressbar (Weer terug naar 6 stappen) */}
       <div className="w-full max-w-xl mx-auto px-8 pt-20 pb-4 flex-none">
         <div className="flex gap-1.5">
           {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -90,14 +89,14 @@ export default function OnboardingPage() {
 
       <div className="flex-1 flex items-center justify-center px-6 min-h-0">
         <div className="w-full max-w-xl">
-          {/* STAP 1: NAAM */}
+          {/* PASO 1: NOMBRE */}
           {step === 1 && (
             <div className="space-y-6 animate-in fade-in zoom-in-95">
               <h1 className="text-4xl font-black uppercase tracking-tighter leading-none">
-                Hoe heet <br />{" "}
-                <span className="text-[#4FC3F7]">je doggy?</span>
+                ¿Cómo se llama <br />{" "}
+                <span className="text-[#4FC3F7]">tu doggy?</span>
               </h1>
-              (in je dashboard kun je meerdere honden toevoegen)
+              (en tu panel puedes añadir varios perros)
               <input
                 autoFocus
                 value={formData.name}
@@ -105,23 +104,23 @@ export default function OnboardingPage() {
                   setFormData({ ...formData, name: e.target.value })
                 }
                 className="w-full p-6 border-4 border-[#1A1A2E] rounded-2xl font-black text-xl uppercase outline-none focus:border-[#4FC3F7] bg-white"
-                placeholder="NAAM HIER..."
+                placeholder="NOMBRE AQUÍ..."
               />
               <Button
                 onClick={nextStep}
                 disabled={!formData.name}
                 className="w-full py-8 bg-[#1A1A2E] text-white font-black uppercase rounded-2xl text-lg shadow-[0_6px_0_0_#4FC3F7]">
-                Volgende <ArrowRight className="ml-2" />
+                Siguiente <ArrowRight className="ml-2" />
               </Button>
             </div>
           )}
 
-          {/* STAP 2: FOTO */}
+          {/* PASO 2: FOTO */}
           {step === 2 && (
             <div className="space-y-6 animate-in fade-in">
               <h1 className="text-4xl font-black uppercase tracking-tighter leading-none">
-                Heb je een <br />{" "}
-                <span className="text-[#4FC3F7]">leuke foto</span>?
+                ¿Tienes una <br />{" "}
+                <span className="text-[#4FC3F7]">bonita foto</span>?
               </h1>
               <input
                 type="file"
@@ -143,7 +142,7 @@ export default function OnboardingPage() {
                   <>
                     <Camera size={32} className="text-slate-200 mb-2" />
                     <span className="text-slate-400 font-black uppercase text-[10px]">
-                      Klik om te uploaden
+                      Haz clic para subir
                     </span>
                   </>
                 )}
@@ -151,53 +150,57 @@ export default function OnboardingPage() {
               <Button
                 onClick={nextStep}
                 className="w-full py-6 bg-[#1A1A2E] text-white font-black uppercase rounded-2xl shadow-[0_6px_0_0_#4FC3F7]">
-                Opslaan & Doorgaan
+                Guardar & Continuar
               </Button>
             </div>
           )}
 
-          {/* STAP 3: OMVANG & TYPE */}
+          {/* PASO 3: TAMAÑO & TIPO */}
           {step === 3 && (
             <div className="space-y-6 animate-in fade-in">
               <h1 className="text-4xl font-black uppercase tracking-tighter leading-none">
-                Wat voor <span className="text-[#4FC3F7]">doggy</span> is het?
+                ¿Qué tipo de <span className="text-[#4FC3F7]">doggy</span> es?
               </h1>
               <input
                 value={formData.breed}
-                placeholder="RAS (BIJV. LABRADOR)"
+                placeholder="RAZA (EJ. LABRADOR)"
                 className="w-full p-4 border-4 border-[#1A1A2E] rounded-xl font-black uppercase outline-none focus:border-[#4FC3F7]"
                 onChange={(e) =>
                   setFormData({ ...formData, breed: e.target.value })
                 }
               />
               <div className="grid grid-cols-3 gap-2">
-                {["klein", "middel", "groot"].map((s) => (
+                {[
+                  { value: "pequeño", label: "pequeño" },
+                  { value: "mediano", label: "mediano" },
+                  { value: "grande", label: "grande" },
+                ].map((s) => (
                   <button
-                    key={s}
-                    onClick={() => setFormData({ ...formData, size: s })}
-                    className={`py-4 border-4 rounded-xl font-black uppercase text-xs ${formData.size === s ? "border-[#4FC3F7] bg-blue-50" : "border-[#1A1A2E]"}`}>
-                    {s}
+                    key={s.value}
+                    onClick={() => setFormData({ ...formData, size: s.value })}
+                    className={`py-4 border-4 rounded-xl font-black uppercase text-xs ${formData.size === s.value ? "border-[#4FC3F7] bg-blue-50" : "border-[#1A1A2E]"}`}>
+                    {s.label}
                   </button>
                 ))}
               </div>
               <Button
                 onClick={nextStep}
                 className="w-full py-6 bg-[#1A1A2E] text-white font-black uppercase rounded-2xl shadow-[0_6px_0_0_#4FC3F7]">
-                Volgende
+                Siguiente
               </Button>
             </div>
           )}
 
-          {/* STAP 4: LEEFTIJD & GEWICHT (GECOMBINEERD) */}
+          {/* PASO 4: EDAD & PESO */}
           {step === 4 && (
             <div className="space-y-6 animate-in fade-in">
               <h1 className="text-4xl font-black uppercase tracking-tighter leading-none text-[#4FC3F7]">
-                Stats van {formData.name}
+                Stats de {formData.name}
               </h1>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase text-slate-400">
-                    Leeftijd (jaar)
+                    Edad (años)
                   </label>
                   <input
                     type="number"
@@ -211,7 +214,7 @@ export default function OnboardingPage() {
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase text-slate-400">
-                    Gewicht (kg)
+                    Peso (kg)
                   </label>
                   <input
                     type="number"
@@ -228,41 +231,47 @@ export default function OnboardingPage() {
                 onClick={nextStep}
                 disabled={!formData.age || !formData.weight}
                 className="w-full py-8 bg-[#1A1A2E] text-white font-black uppercase rounded-2xl shadow-[0_6px_0_0_#4FC3F7]">
-                Volgende
+                Siguiente
               </Button>
             </div>
           )}
 
-          {/* STAP 5: GESLACHT & STERILISATIE (GECOMBINEERD) */}
+          {/* PASO 5: SEXO & ESTERILIZACIÓN */}
           {step === 5 && (
             <div className="space-y-6 animate-in fade-in">
               <h1 className="text-4xl font-black uppercase tracking-tighter leading-none text-[#4FC3F7]">
-                Gezondheid
+                Salud
               </h1>
               <div className="space-y-4">
                 <div className="flex gap-2">
-                  {["Reu", "Teef"].map((g) => (
+                  {[
+                    { value: "Macho", label: "Macho" },
+                    { value: "Hembra", label: "Hembra" },
+                  ].map((g) => (
                     <button
-                      key={g}
-                      onClick={() => setFormData({ ...formData, gender: g })}
-                      className={`flex-1 py-5 border-4 rounded-xl font-black uppercase ${formData.gender === g ? "border-[#4FC3F7] bg-blue-50" : "border-[#1A1A2E]"}`}>
-                      {g}
+                      key={g.value}
+                      onClick={() => setFormData({ ...formData, gender: g.value })}
+                      className={`flex-1 py-5 border-4 rounded-xl font-black uppercase ${formData.gender === g.value ? "border-[#4FC3F7] bg-blue-50" : "border-[#1A1A2E]"}`}>
+                      {g.label}
                     </button>
                   ))}
                 </div>
                 <div className="p-4 bg-white border-4 border-[#1A1A2E] rounded-2xl">
                   <p className="text-[10px] font-black uppercase text-slate-400 mb-3 text-center">
-                    Is {formData.name} geholpen?
+                    ¿Está {formData.name} castrado/a?
                   </p>
                   <div className="flex gap-2">
-                    {["Ja", "Nee"].map((s) => (
+                    {[
+                      { value: "Sí", label: "Sí" },
+                      { value: "No", label: "No" },
+                    ].map((s) => (
                       <button
-                        key={s}
+                        key={s.value}
                         onClick={() =>
-                          setFormData({ ...formData, sterilized: s })
+                          setFormData({ ...formData, sterilized: s.value })
                         }
-                        className={`flex-1 py-3 rounded-lg font-black uppercase text-xs ${formData.sterilized === s ? "bg-[#4FC3F7] text-white" : "bg-slate-100 text-slate-400"}`}>
-                        {s}
+                        className={`flex-1 py-3 rounded-lg font-black uppercase text-xs ${formData.sterilized === s.value ? "bg-[#4FC3F7] text-white" : "bg-slate-100 text-slate-400"}`}>
+                        {s.label}
                       </button>
                     ))}
                   </div>
@@ -272,12 +281,12 @@ export default function OnboardingPage() {
                 onClick={nextStep}
                 disabled={!formData.gender || !formData.sterilized}
                 className="w-full py-8 bg-[#1A1A2E] text-white font-black uppercase rounded-2xl shadow-[0_6px_0_0_#4FC3F7]">
-                Check resultaat
+                Ver resultado
               </Button>
             </div>
           )}
 
-          {/* STAP 6: ACTIVATIE */}
+          {/* PASO 6: ACTIVACIÓN */}
           {step === 6 && (
             <div className="animate-in zoom-in-95 border-4 border-[#1A1A2E] p-6 rounded-3xl bg-white shadow-[12px_12px_0_0_#4FC3F7] space-y-4">
               <div className="text-center">
@@ -286,12 +295,12 @@ export default function OnboardingPage() {
                   size={40}
                 />
                 <h2 className="text-2xl font-black uppercase tracking-tighter leading-tight">
-                  Activeer trial <br /> voor {formData.name}
+                  Activar prueba <br /> para {formData.name}
                 </h2>
               </div>
               <div className="bg-[#F8FAFC] p-4 rounded-xl border-2 border-slate-100 flex justify-between items-center">
                 <span className="text-[10px] font-black uppercase text-slate-400">
-                  Totaal vandaag
+                  Total hoy
                 </span>
                 <span className="text-xl font-black text-emerald-500">
                   €0,00
@@ -304,7 +313,7 @@ export default function OnboardingPage() {
                 {isSubmitting ? (
                   <Loader2 className="animate-spin" />
                 ) : (
-                  "Start nu gratis"
+                  "Comenzar gratis ahora"
                 )}
               </Button>
             </div>

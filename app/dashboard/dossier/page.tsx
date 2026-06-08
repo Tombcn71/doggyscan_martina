@@ -37,19 +37,19 @@ interface Dog {
 }
 
 const dossierVertalingen: Record<string, string> = {
-  alles: "Alles",
-  pain: "Pijn Signalen",
-  vomit: "Braaksel Analyse",
-  poop: "Ontlasting Analyse",
-  eyes: "Oog Check",
-  ears: "Oor Check",
-  nose: "Neus Analyse",
-  skin: "Huid & Allergie",
-  ticks: "Parasieten & Teken",
-  mange: "Huidinfecties",
-  dental: "Gebit & Tandvlees",
-  symmetry: "Lichaams-Symmetrie",
-  coat: "Vachtkwaliteit",
+  alles: "Todo",
+  pain: "Señales de Dolor",
+  vomit: "Análisis de Vómito",
+  poop: "Análisis de Heces",
+  eyes: "Revisión Ocular",
+  ears: "Revisión de Oídos",
+  nose: "Análisis Nasal",
+  skin: "Piel & Alergia",
+  ticks: "Parásitos & Garrapatas",
+  mange: "Infecciones Cutáneas",
+  dental: "Dentadura & Encías",
+  symmetry: "Simetría Corporal",
+  coat: "Calidad del Pelaje",
 };
 
 export const dynamic = "force-dynamic";
@@ -71,7 +71,6 @@ export default function DossierPagina() {
 
 function DossierContent() {
   const searchParams = useSearchParams();
-  // Veilige check voor build-tijd
   const dogIdFromUrl = searchParams ? searchParams.get("dogId") : null;
 
   const [scans, setScans] = useState<DossierScan[]>([]);
@@ -89,7 +88,6 @@ function DossierContent() {
       try {
         setLoading(true);
 
-        // 1. Haal de specifieke hondgegevens op
         const resHonden = await fetch(`/api/dogs?dogId=${dogIdFromUrl}`);
         const hondenData = await resHonden.json();
 
@@ -103,7 +101,6 @@ function DossierContent() {
           setDog(hondenData);
         }
 
-        // 2. Haal de scans op
         const resScans = await fetch(`/api/scans?dogId=${dogIdFromUrl}`);
         const scansData = await resScans.json();
 
@@ -116,7 +113,7 @@ function DossierContent() {
           setScans(sorted);
         }
       } catch (err) {
-        console.error("Dossier laad fout:", err);
+        console.error("Error al cargar expediente:", err);
       } finally {
         setLoading(false);
       }
@@ -126,7 +123,7 @@ function DossierContent() {
   }, [dogIdFromUrl]);
 
   async function verwijderItem(id: string) {
-    if (!confirm("Weet je zeker dat je deze scan wilt verwijderen?")) return;
+    if (!confirm("¿Estás seguro de que quieres eliminar este escaneo?")) return;
     try {
       const res = await fetch(`/api/scans/${id}`, { method: "DELETE" });
       if (res.ok) {
@@ -157,9 +154,9 @@ function DossierContent() {
   if (!dog) {
     return (
       <div className="p-12 text-center">
-        <h2 className="text-xl font-bold">Geen hond geselecteerd</h2>
+        <h2 className="text-xl font-bold">Ningún perro seleccionado</h2>
         <Link href="/dashboard" className="text-[#4FC3F7] underline mt-4 block">
-          Ga terug naar het dashboard
+          Volver al panel
         </Link>
       </div>
     );
@@ -170,7 +167,7 @@ function DossierContent() {
       <Link
         href={`/dashboard?dogId=${dogIdFromUrl}`}
         className="inline-flex items-center gap-2 text-slate-400 font-bold text-[10px] uppercase tracking-widest hover:text-[#4FC3F7] mb-8 transition-colors">
-        <ArrowLeft size={14} /> Terug naar Dashboard
+        <ArrowLeft size={14} /> Volver al Panel
       </Link>
 
       <header className="mb-12 flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -191,16 +188,16 @@ function DossierContent() {
           <div>
             <h1 className="text-2xl md:text-4xl font-black text-[#1A1A2E] uppercase tracking-tight italic leading-none">
               {dog.name}'s{" "}
-              <span className="text-[#4FC3F7] not-italic px-1">/</span> Dossier
+              <span className="text-[#4FC3F7] not-italic px-1">/</span> Expediente
             </h1>
             <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] mt-2">
-              Historie en AI-Analyses van {dog.name}
+              Historial y Análisis IA de {dog.name}
             </p>
           </div>
         </div>
 
         <Button className="bg-[#1A1A2E] text-white rounded-2xl px-6 h-12 hover:bg-[#4FC3F7] transition-all font-bold uppercase text-[10px] tracking-widest">
-          <FileDown size={18} className="mr-2" /> PDF Export
+          <FileDown size={18} className="mr-2" /> Exportar PDF
         </Button>
       </header>
 
@@ -227,7 +224,7 @@ function DossierContent() {
       {gefilterdeScans.length === 0 ? (
         <div className="py-20 text-center border-2 border-dashed border-slate-100 rounded-[2.5rem]">
           <p className="text-slate-400 font-bold text-xs uppercase tracking-widest">
-            Nog geen scans gevonden voor {dog.name}
+            Aún no se encontraron escaneos para {dog.name}
           </p>
         </div>
       ) : (
@@ -240,7 +237,7 @@ function DossierContent() {
                 {scan.image_url ? (
                   <img
                     src={scan.image_url}
-                    alt="Scan resultaat"
+                    alt="Resultado del escaneo"
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -271,7 +268,7 @@ function DossierContent() {
 
                 <div className="bg-slate-50 rounded-2xl p-5 border border-slate-50 mb-6">
                   <span className="text-[9px] font-black uppercase text-[#4FC3F7] tracking-[0.2em] block mb-2">
-                    AI Advies
+                    Consejo IA
                   </span>
                   <p
                     className={`text-[13px] font-bold leading-snug ${
@@ -284,7 +281,7 @@ function DossierContent() {
                 <div className="flex justify-between items-center pt-2 border-t border-slate-50">
                   <div className="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-widest">
                     <Calendar size={14} className="text-[#4FC3F7]" />
-                    {new Date(scan.created_at).toLocaleDateString("nl-NL")}
+                    {new Date(scan.created_at).toLocaleDateString("es-ES")}
                   </div>
                   <Button
                     variant="ghost"

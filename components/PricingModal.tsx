@@ -25,12 +25,9 @@ export function PricingModal({ isOpen, onClose, dogId }: PricingModalProps) {
 
   return createPortal(
     <div className="fixed inset-0 bg-white/85 backdrop-blur-xl flex items-center justify-center z-[999999] p-4 animate-in fade-in duration-300">
-      {/* Container: w-[95vw] voor mobiel, max-w-md voor desktop */}
       <div className="bg-white rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-8 w-[95vw] max-w-md max-h-[90vh] overflow-y-auto relative shadow-[0_25px_60px_-15px_rgba(0,0,0,0.1)] border-4 border-[#4FC3F7] transform animate-in zoom-in-95 duration-200">
-        {/* Achtergrond branding gloed */}
         <div className="absolute -top-24 -right-24 w-48 h-48 bg-[#4FC3F7]/10 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Sluitknop */}
         <button
           onClick={onClose}
           className="absolute top-5 right-5 text-slate-400 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 p-1.5 rounded-full transition-colors z-10"
@@ -50,29 +47,28 @@ export function PricingModal({ isOpen, onClose, dogId }: PricingModalProps) {
             />
           </div>
           <span className="text-[10px] bg-blue-50 text-[#4FC3F7] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-blue-100">
-            Kies voor de beste zorg
+            Elige la mejor atención
           </span>
           <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tighter italic text-[#1A1A2E] mt-3">
-            Ontgrendel Pro
+            Desbloquea Pro
           </h2>
 
-          {/* Early Bird Pitch - TERUGGEPLAATST */}
           <p className="text-xs text-slate-500 mt-2 font-bold max-w-sm mx-auto leading-relaxed">
-            🚀 Word een van onze{" "}
-            <span className="text-[#4FC3F7]">Early Adopters</span>! Help ons
-            DoggyScan te bouwen en claim een levenslange korting als bedankje
-            voor je vroege vertrouwen.
+            🚀 ¡Sé uno de nuestros{" "}
+            <span className="text-[#4FC3F7]">Early Adopters</span>! Ayúdanos a
+            construir DoggyScan y reclama un descuento de por vida como
+            agradecimiento por tu confianza temprana.
           </p>
         </div>
 
-        {/* Dynamische USP's */}
+        {/* USPs */}
         <div className="bg-slate-50 rounded-2xl p-4 mb-6 border border-slate-100 space-y-2.5">
           {[
-            "Toegang voor 3 honden",
-            "Onbeperkte AI-gezondheidsscans",
-            "Historisch medisch dossier",
-            "PDF rapport voor de dierenarts",
-            "Direct resultaat in 30 seconden",
+            "Acceso para 3 perros",
+            "Escaneos de salud IA ilimitados",
+            "Expediente médico histórico",
+            "Informe PDF para el veterinario",
+            "Resultado directo en 30 segundos",
           ].map((text, i) => (
             <div key={i} className="flex items-start gap-2.5 text-left">
               <CheckCircle2
@@ -84,7 +80,7 @@ export function PricingModal({ isOpen, onClose, dogId }: PricingModalProps) {
           ))}
         </div>
 
-        {/* De Plannen */}
+        {/* Planes */}
         <div className="space-y-3.5">
           <button
             onClick={() =>
@@ -94,16 +90,16 @@ export function PricingModal({ isOpen, onClose, dogId }: PricingModalProps) {
             className="w-full group bg-white border-2 border-slate-200 p-4 rounded-2xl hover:border-[#4FC3F7] hover:bg-slate-50/50 transition-all text-left flex items-center justify-between outline-none">
             <div>
               <span className="font-black uppercase tracking-tight text-xs text-slate-400 block mb-0.5">
-                Flexibel abonnement
+                Suscripción flexible
               </span>
               <span className="font-extrabold uppercase tracking-tighter text-base text-[#1A1A2E]">
-                Maandelijks
+                Mensual
               </span>
             </div>
             <div className="text-right">
               <span className="text-2xl font-black text-[#1A1A2E]">€10,00</span>
               <span className="text-[10px] font-bold text-slate-400 uppercase block -mt-1">
-                / mnd
+                / mes
               </span>
             </div>
           </button>
@@ -120,10 +116,10 @@ export function PricingModal({ isOpen, onClose, dogId }: PricingModalProps) {
             <div className="flex items-center justify-between">
               <div>
                 <span className="font-black uppercase tracking-tight text-xs text-[#4FC3F7] block mb-0.5">
-                  Beste Deal
+                  Mejor Oferta
                 </span>
                 <span className="font-extrabold uppercase tracking-tighter text-base text-[#1A1A2E]">
-                  Jaarlijks plan
+                  Plan anual
                 </span>
               </div>
               <div className="text-right pr-16">
@@ -131,30 +127,30 @@ export function PricingModal({ isOpen, onClose, dogId }: PricingModalProps) {
                   €60,00
                 </span>
                 <span className="text-[10px] font-bold text-slate-400 uppercase block -mt-1">
-                  / jr
+                  / año
                 </span>
               </div>
             </div>
           </button>
         </div>
 
-        {/* Privacy & Controle */}
+        {/* Privacidad */}
         <div className="mt-6 pt-5 border-t border-slate-100 text-center">
           <div className="flex items-center justify-center gap-1.5 text-slate-400 mb-1">
             <ShieldCheck size={13} className="text-slate-400" />
             <span className="text-[10px] font-bold uppercase tracking-wider">
-              Privacy & Controle
+              Privacidad & Control
             </span>
           </div>
           <p className="text-[11px] text-slate-400 font-semibold leading-relaxed px-2">
-            Geen behoefte aan Pro? Je zit nergens aan vast. Je kunt je account
-            en alle opgeslagen medische data op elk moment permanent vernietigen
-            via de{" "}
+            ¿No necesitas Pro? No estás comprometido a nada. Puedes destruir
+            permanentemente tu cuenta y todos los datos médicos almacenados en
+            cualquier momento desde los{" "}
             <Link
               href={`/dashboard/instellingen${dogId ? `?dogId=${dogId}` : ""}`}
               onClick={onClose}
               className="text-[#4FC3F7] font-bold underline hover:text-[#1A1A2E] transition-colors">
-              Instellingen
+              Ajustes
             </Link>
             .
           </p>

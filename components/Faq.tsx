@@ -10,29 +10,29 @@ import {
 
 const faqs = [
   {
-    question: "Welke 12 ziektebeelden kan de AI herkennen?",
+    question: "¿Qué 12 condiciones puede reconocer la IA?",
     answer:
-      "Onze AI is getraind op duizenden klinische beelden en herkent onder andere huidinfecties, hotspots, teken/vlooien, oogontstekingen, tekenen van staar, oorproblemen en diverse huiduitslag. Het Basis plan geeft je toegang tot de volledige database.",
+      "Nuestra IA está entrenada con miles de imágenes clínicas y reconoce entre otras: infecciones cutáneas, hotspots, garrapatas/pulgas, inflamaciones oculares, signos de cataratas, problemas de oídos y diversas erupciones cutáneas. El plan Básico te da acceso a la base de datos completa.",
   },
   {
-    question: "Vervangt deze app een bezoek aan de dierenarts?",
+    question: "¿Reemplaza esta app una visita al veterinario?",
     answer:
-      "Nee, PetCheck is een preventief hulpmiddel. Het helpt je om symptomen vroegtijdig te herkennen en geeft je een medisch rapport dat je kunt delen met je dierenarts. Bij spoed moet je altijd direct contact opnemen met een specialist.",
+      "No, PetCheck es una herramienta preventiva. Te ayuda a reconocer síntomas a tiempo y te proporciona un informe médico que puedes compartir con tu veterinario. En casos urgentes, siempre contacta directamente con un especialista.",
   },
   {
-    question: "Hoe nauwkeurig is de AI-scan?",
+    question: "¿Qué tan preciso es el escaneo de IA?",
     answer:
-      "De nauwkeurigheid ligt momenteel boven de 90% voor de meest voorkomende huidaandoeningen. Voor een optimaal resultaat raden we aan om foto's te maken bij goed daglicht en scherp te stellen op het probleemgebied.",
+      "La precisión supera actualmente el 90% para las afecciones cutáneas más comunes. Para un resultado óptimo, recomendamos hacer fotos con buena luz natural y enfocando el área problemática.",
   },
   {
-    question: "Can ik mijn abonnement op elk moment opzeggen?",
+    question: "¿Puedo cancelar mi suscripción en cualquier momento?",
     answer:
-      "Zeker. We werken niet met wurgcontracten. Je kunt je Basis plan op elk moment met één klik stopzetten via je profielinstellingen. Je behoudt toegang tot je historie tot het einde van je factuurperiode.",
+      "Por supuesto. No trabajamos con contratos vinculantes. Puedes cancelar tu plan Básico con un solo clic en cualquier momento desde la configuración de tu perfil. Mantendrás acceso a tu historial hasta el final de tu período de facturación.",
   },
   {
-    question: "Hoe werkt de optie voor meerdere honden?",
+    question: "¿Cómo funciona la opción para varios perros?",
     answer:
-      "In het Basis plan betaal je een vast bedrag voor de eerste hond en een gereduceerd tarief (€5,00) voor elke extra hond. Zo blijft professionele zorg betaalbaar voor gezinnen met meerdere viervoeters.",
+      "En el plan Básico pagas una tarifa fija por el primer perro y una tarifa reducida (€5,00) por cada perro adicional. Así la atención profesional sigue siendo accesible para familias con varios perros.",
   },
 ];
 
@@ -40,14 +40,14 @@ export default function Faq() {
   return (
     <section className="py-24 bg-white border-t border-slate-50">
       <section id="faq" className="scroll-mt-20">
-        {/* ... rest van je FAQ content ... */}
+        {/* ... */}
       </section>
       <div className="max-w-3xl mx-auto px-6">
         <header className="text-center mb-16">
           <h2
             className="text-3xl md:text-4xl font-black uppercase tracking-tighter text-slate-800"
             style={{ fontFamily: "'Syne', sans-serif" }}>
-            Veelgestelde <span className="text-[#4FC3F7]">Vragen</span>
+            Preguntas <span className="text-[#4FC3F7]">Frecuentes</span>
           </h2>
           <div className="h-1.5 w-16 bg-[#4FC3F7] mx-auto rounded-full mt-4" />
         </header>

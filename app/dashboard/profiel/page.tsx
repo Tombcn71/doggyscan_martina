@@ -6,7 +6,6 @@ import { Save, ArrowLeft, Camera, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-// Wrapper om useSearchParams heen voor Next.js 13/14/15
 function ProfielContent() {
   const { user } = useUser();
   const searchParams = useSearchParams();
@@ -28,7 +27,6 @@ function ProfielContent() {
     image_url: "",
   });
 
-  // 1. DATA OPHALEN VOOR SPECIFIEKE HOND
   useEffect(() => {
     const fetchDogData = async () => {
       if (!dogId) {
@@ -38,10 +36,9 @@ function ProfielContent() {
 
       try {
         const res = await fetch("/api/dogs");
-        if (!res.ok) throw new Error("Kon data niet ophalen");
+        if (!res.ok) throw new Error("No se pudieron obtener los datos");
         const data = await res.json();
 
-        // Zoek de specifieke hond in de roedel
         const currentDog = Array.isArray(data)
           ? data.find((d: any) => d.id.toString() === dogId)
           : data;
@@ -59,7 +56,7 @@ function ProfielContent() {
           });
         }
       } catch (error) {
-        console.error("Fout bij ophalen:", error);
+        console.error("Error al obtener:", error);
       } finally {
         setLoading(false);
       }
@@ -67,7 +64,6 @@ function ProfielContent() {
     fetchDogData();
   }, [dogId]);
 
-  // 2. AFBEELDING UPLOADEN
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -77,7 +73,6 @@ function ProfielContent() {
     reader.onload = async () => {
       const base64Image = reader.result as string;
       try {
-        // We sturen de PATCH naar de API met het dogId zodat hij de juiste hond update
         const res = await fetch("/api/dogs", {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -88,7 +83,7 @@ function ProfielContent() {
           setDogData((prev) => ({ ...prev, image_url: result.url }));
         }
       } catch (error) {
-        alert("Uploaden mislukt");
+        alert("Error al subir");
       } finally {
         setIsUploading(false);
       }
@@ -96,7 +91,6 @@ function ProfielContent() {
     reader.readAsDataURL(file);
   };
 
-  // 3. PROFIEL OPSLAAN
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSaving(true);
@@ -107,9 +101,9 @@ function ProfielContent() {
         body: JSON.stringify({ ...dogData, dogId, image: null }),
       });
       if (res.ok)
-        alert("Profiel van " + dogData.name + " succesvol bijgewerkt!");
+        alert("¡Perfil de " + dogData.name + " actualizado correctamente!");
     } catch (error) {
-      alert("Er ging iets mis.");
+      alert("Algo salió mal.");
     } finally {
       setIsSaving(false);
     }
@@ -118,14 +112,14 @@ function ProfielContent() {
   if (loading)
     return (
       <div className="p-12 flex items-center gap-4 font-black uppercase text-slate-300">
-        <Loader2 className="animate-spin" size={20} /> Laden...
+        <Loader2 className="animate-spin" size={20} /> Cargando...
       </div>
     );
 
   if (!dogId)
     return (
       <div className="p-12 font-black uppercase text-red-400">
-        Geen hond geselecteerd. Ga terug naar het dashboard.
+        Ningún perro seleccionado. Vuelve al panel.
       </div>
     );
 
@@ -139,16 +133,16 @@ function ProfielContent() {
             size={14}
             className="group-hover:-translate-x-1 transition-transform"
           />
-          Terug naar Dashboard
+          Volver al Panel
         </Link>
 
         <header className="mb-10">
           <h1 className="text-3xl font-black text-[#1A1A2E] uppercase tracking-tight italic">
-            Profiel <span className="text-[#4FC3F7] not-italic px-2">/</span>{" "}
-            {dogData.name || "Hond"}
+            Perfil <span className="text-[#4FC3F7] not-italic px-2">/</span>{" "}
+            {dogData.name || "Perro"}
           </h1>
           <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">
-            Account: {user?.primaryEmailAddress?.emailAddress}
+            Cuenta: {user?.primaryEmailAddress?.emailAddress}
           </p>
         </header>
 
@@ -156,7 +150,7 @@ function ProfielContent() {
           {/* FOTO */}
           <div className="flex flex-col gap-4">
             <label className="text-[10px] font-black uppercase tracking-widest text-[#4FC3F7]">
-              Hondenfoto
+              Foto del perro
             </label>
             <div
               onClick={() => !isUploading && fileInputRef.current?.click()}
@@ -165,7 +159,7 @@ function ProfielContent() {
                 <img
                   src={dogData.image_url}
                   className="w-full h-full object-cover"
-                  alt="Hond"
+                  alt="Perro"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-3xl">
@@ -195,10 +189,10 @@ function ProfielContent() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* NAAM */}
+            {/* NOMBRE */}
             <div className="flex flex-col gap-2">
               <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">
-                Naam
+                Nombre
               </label>
               <input
                 type="text"
@@ -211,10 +205,10 @@ function ProfielContent() {
               />
             </div>
 
-            {/* RAS */}
+            {/* RAZA */}
             <div className="flex flex-col gap-2">
               <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">
-                Ras
+                Raza
               </label>
               <input
                 type="text"
@@ -226,10 +220,10 @@ function ProfielContent() {
               />
             </div>
 
-            {/* LEEFTIJD */}
+            {/* EDAD */}
             <div className="flex flex-col gap-2">
               <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">
-                Leeftijd
+                Edad
               </label>
               <input
                 type="number"
@@ -241,10 +235,10 @@ function ProfielContent() {
               />
             </div>
 
-            {/* GEWICHT */}
+            {/* PESO */}
             <div className="flex flex-col gap-2">
               <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">
-                Gewicht (kg)
+                Peso (kg)
               </label>
               <input
                 type="number"
@@ -256,10 +250,10 @@ function ProfielContent() {
               />
             </div>
 
-            {/* GROOTTE SELECTIE */}
+            {/* TAMAÑO */}
             <div className="flex flex-col gap-2">
               <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">
-                Formaat
+                Tamaño
               </label>
               <select
                 value={dogData.size}
@@ -267,51 +261,57 @@ function ProfielContent() {
                   setDogData({ ...dogData, size: e.target.value })
                 }
                 className="p-4 bg-slate-50 border border-slate-200 rounded-xl font-bold outline-none appearance-none">
-                <option value="klein">Klein</option>
-                <option value="middel">Middel</option>
-                <option value="groot">Groot</option>
+                <option value="pequeño">Pequeño</option>
+                <option value="mediano">Mediano</option>
+                <option value="grande">Grande</option>
               </select>
             </div>
 
-            {/* GESLACHT */}
+            {/* SEXO */}
             <div className="flex flex-col gap-2">
               <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">
-                Geslacht
+                Sexo
               </label>
               <div className="flex gap-2">
-                {["Reu", "Teef"].map((g) => (
+                {[
+                  { value: "Macho", label: "Macho" },
+                  { value: "Hembra", label: "Hembra" },
+                ].map((g) => (
                   <button
-                    key={g}
+                    key={g.value}
                     type="button"
-                    onClick={() => setDogData({ ...dogData, gender: g })}
+                    onClick={() => setDogData({ ...dogData, gender: g.value })}
                     className={`flex-1 py-3 rounded-xl font-bold border-2 transition-all ${
-                      dogData.gender === g
+                      dogData.gender === g.value
                         ? "border-[#4FC3F7] bg-blue-50 text-[#1A1A2E]"
                         : "border-slate-100 text-slate-400"
                     }`}>
-                    {g}
+                    {g.label}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* STERILISATIE */}
+            {/* ESTERILIZADO */}
             <div className="flex flex-col gap-2 md:col-span-2">
               <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">
-                Gecastreerd / Gesteriliseerd
+                Castrado / Esterilizado
               </label>
               <div className="flex gap-2">
-                {["Ja", "Nee"].map((s) => (
+                {[
+                  { value: "Sí", label: "Sí" },
+                  { value: "No", label: "No" },
+                ].map((s) => (
                   <button
-                    key={s}
+                    key={s.value}
                     type="button"
-                    onClick={() => setDogData({ ...dogData, sterilized: s })}
+                    onClick={() => setDogData({ ...dogData, sterilized: s.value })}
                     className={`flex-1 py-3 rounded-xl font-bold border-2 transition-all ${
-                      dogData.sterilized === s
+                      dogData.sterilized === s.value
                         ? "border-[#4FC3F7] bg-blue-50 text-[#1A1A2E]"
                         : "border-slate-100 text-slate-400"
                     }`}>
-                    {s}
+                    {s.label}
                   </button>
                 ))}
               </div>
@@ -327,7 +327,7 @@ function ProfielContent() {
             ) : (
               <Save size={16} />
             )}
-            {isSaving ? "Opslaan..." : "Profiel Opslaan"}
+            {isSaving ? "Guardando..." : "Guardar Perfil"}
           </button>
         </form>
       </div>
@@ -335,10 +335,9 @@ function ProfielContent() {
   );
 }
 
-// Default export met Suspense (vereist voor useSearchParams in Next.js)
 export default function ProfielPage() {
   return (
-    <Suspense fallback={<div>Laden...</div>}>
+    <Suspense fallback={<div>Cargando...</div>}>
       <ProfielContent />
     </Suspense>
   );

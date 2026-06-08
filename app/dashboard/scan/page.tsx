@@ -29,98 +29,98 @@ const tools = [
   {
     id: "pain",
     icon: "🤕",
-    title: "Pijn Signalen",
+    title: "Señales de Dolor",
     bg: "#FCE4EC",
     color: "#D81B60",
-    photoTip: "Maak een foto van het gezicht van je hond",
+    photoTip: "Toma una foto del rostro de tu perro",
   },
   {
     id: "vomit",
     icon: "🤮",
-    title: "Braaksel Analyse",
+    title: "Análisis de Vómito",
     bg: "#F1F8E9",
     color: "#558B2F",
-    photoTip: "Maak een foto van het braaksel op de grond",
+    photoTip: "Toma una foto del vómito en el suelo",
   },
   {
     id: "poop",
     icon: "💩",
-    title: "Ontlasting Analyse",
+    title: "Análisis de Heces",
     bg: "#F1EFE8",
     color: "#5D4037",
-    photoTip: "Maak een foto van de ontlasting op de grond",
+    photoTip: "Toma una foto de las heces en el suelo",
   },
   {
     id: "eyes",
     icon: "👁️",
-    title: "Oog Check",
+    title: "Revisión Ocular",
     bg: "#E6F1FB",
     color: "#0288D1",
-    photoTip: "Maak een close-up van het oog of de ogen",
+    photoTip: "Toma un primer plano del ojo o los ojos",
   },
   {
     id: "ears",
     icon: "🐶",
-    title: "Oor Check",
+    title: "Revisión de Oídos",
     bg: "#E1F5EE",
     color: "#00695C",
-    photoTip: "Maak een foto van het binnenste van het oor",
+    photoTip: "Toma una foto del interior del oído",
   },
   {
     id: "nose",
     icon: "🐽",
-    title: "Neus Analyse",
+    title: "Análisis Nasal",
     bg: "#ECEFF1",
     color: "#455A64",
-    photoTip: "Maak een foto van de neus, goed belicht",
+    photoTip: "Toma una foto de la nariz, bien iluminada",
   },
   {
     id: "skin",
     icon: "🐾",
-    title: "Huid & Allergie",
+    title: "Piel & Alergia",
     bg: "#FAEEDA",
     color: "#E65100",
-    photoTip: "Maak een foto van het aangetaste huidgebied",
+    photoTip: "Toma una foto del área de piel afectada",
   },
   {
     id: "ticks",
     icon: "🕷️",
-    title: "Parasieten & Teken",
+    title: "Parásitos & Garrapatas",
     bg: "#EEEDFE",
     color: "#6A1B9A",
-    photoTip: "Maak een close-up van de teek of parasiet",
+    photoTip: "Toma un primer plano de la garrapata o parásito",
   },
   {
     id: "mange",
     icon: "🔬",
-    title: "Huidinfecties",
+    title: "Infecciones Cutáneas",
     bg: "#FCEBEB",
     color: "#C62828",
-    photoTip: "Maak een foto van de aangetaste plek op de huid",
+    photoTip: "Toma una foto del área afectada de la piel",
   },
   {
     id: "dental",
     icon: "🦷",
-    title: "Gebit & Tandvlees",
+    title: "Dentadura & Encías",
     bg: "#EAF3DE",
     color: "#388E3C",
-    photoTip: "Maak een foto van de tanden, mond geopend",
+    photoTip: "Toma una foto de los dientes, boca abierta",
   },
   {
     id: "symmetry",
     icon: "🪞",
-    title: "Lichaams-Symmetrie",
+    title: "Simetría Corporal",
     bg: "#E0F7FA",
     color: "#00838F",
-    photoTip: "Maak een foto van je hond van voren, staand",
+    photoTip: "Toma una foto de tu perro de frente, de pie",
   },
   {
     id: "coat",
     icon: "🐕",
-    title: "Vachtkwaliteit",
+    title: "Calidad del Pelaje",
     bg: "#FFF8E1",
     color: "#FF8F00",
-    photoTip: "Maak een close-up van de vacht",
+    photoTip: "Toma un primer plano del pelaje",
   },
 ];
 
@@ -163,7 +163,7 @@ function ScanContent() {
             : data,
         );
       } catch (err) {
-        console.error("Hond laden mislukt", err);
+        console.error("Error al cargar el perro", err);
       }
     }
     loadDog();
@@ -191,7 +191,7 @@ function ScanContent() {
       } catch (err) {
         setResults((prev) => ({
           ...prev,
-          [toolId]: { error: "Analyse mislukt." },
+          [toolId]: { error: "Análisis fallido." },
         }));
       } finally {
         setLoading((prev) => ({ ...prev, [toolId]: false }));
@@ -202,7 +202,7 @@ function ScanContent() {
 
   if (!isLoaded)
     return (
-      <div className="p-20 text-center uppercase font-black">Laden...</div>
+      <div className="p-20 text-center uppercase font-black">Cargando...</div>
     );
 
   return (
@@ -210,7 +210,6 @@ function ScanContent() {
       <PricingModal
         isOpen={trialExpired}
         onClose={() => {
-          // Stuur de gebruiker terug naar het dashboard bij het sluiten
           window.location.href = `/dashboard?dogId=${dogId}`;
         }}
         dogId={dogId || undefined}
@@ -220,7 +219,7 @@ function ScanContent() {
         <Link
           href={`/dashboard?dogId=${dogId}`}
           className="inline-flex items-center gap-2 text-slate-400 font-bold text-[10px] uppercase tracking-widest hover:text-[#4FC3F7] mb-8">
-          <ArrowLeft size={14} /> Terug naar Dashboard
+          <ArrowLeft size={14} /> Volver al Panel
         </Link>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -277,12 +276,12 @@ function ScanContent() {
                   {loading[tool.id] ? (
                     <span className="flex items-center gap-2">
                       <Loader2 className="animate-spin" size={16} />
-                      Analyse bezig...
+                      Analizando...
                     </span>
                   ) : (
                     <span className="flex items-center gap-2">
                       <Upload size={16} />
-                      Upload Foto
+                      Subir Foto
                     </span>
                   )}
                 </Button>
@@ -292,7 +291,7 @@ function ScanContent() {
                     <p className="text-slate-600">{results[tool.id].advice}</p>
                     {results[tool.id].isOk === false && (
                       <span className="inline-block px-2 py-1 bg-red-100 text-red-700 rounded-md font-bold mt-1">
-                        Let op: Check dit bij een dierenarts.
+                        Atención: Consúltalo con un veterinario.
                       </span>
                     )}
                   </div>
@@ -310,7 +309,7 @@ export default function Page() {
   return (
     <Suspense
       fallback={
-        <div className="p-20 text-center uppercase font-black">Laden...</div>
+        <div className="p-20 text-center uppercase font-black">Cargando...</div>
       }>
       <ScanContent />
     </Suspense>

@@ -27,7 +27,6 @@ interface Dog {
   image_url?: string;
 }
 
-// --- HOOFD EXPORT (De Wrapper voor Next.js Build) ---
 export default function VaccinatiesPage() {
   return (
     <Suspense
@@ -41,7 +40,6 @@ export default function VaccinatiesPage() {
   );
 }
 
-// --- DE WERKELIJKE CONTENT COMPONENT ---
 function VaccinatiesContent() {
   const searchParams = useSearchParams();
   const dogIdFromUrl = searchParams.get("dogId");
@@ -85,7 +83,7 @@ function VaccinatiesContent() {
           setDog(dogData);
         }
       } catch (err) {
-        console.error("Fout bij laden:", err);
+        console.error("Error al cargar:", err);
       } finally {
         setLoading(false);
       }
@@ -95,7 +93,7 @@ function VaccinatiesContent() {
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!dogIdFromUrl) return alert("Geen hond geselecteerd.");
+    if (!dogIdFromUrl) return alert("Ningún perro seleccionado.");
 
     try {
       const res = await fetch("/api/vaccinaties", {
@@ -119,19 +117,19 @@ function VaccinatiesContent() {
         });
       }
     } catch (err) {
-      console.error("Opslaan mislukt:", err);
+      console.error("Error al guardar:", err);
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Zeker weten?")) return;
+    if (!confirm("¿Estás seguro?")) return;
     try {
       const res = await fetch(`/api/vaccinaties/${id}`, { method: "DELETE" });
       if (res.ok) {
         setVaccinaties(vaccinaties.filter((v) => v.id !== id));
       }
     } catch (err) {
-      console.error("Verwijderen mislukt:", err);
+      console.error("Error al eliminar:", err);
     }
   };
 
@@ -143,7 +141,7 @@ function VaccinatiesContent() {
         <Link
           href={`/dashboard?dogId=${dogIdFromUrl}`}
           className="inline-flex items-center gap-2 text-slate-400 font-bold text-[10px] uppercase tracking-widest hover:text-[#4FC3F7] mb-8 transition-colors">
-          <ArrowLeft size={14} /> Terug naar Dashboard
+          <ArrowLeft size={14} /> Volver al Panel
         </Link>
 
         <header className="mb-10 flex items-center gap-5">
@@ -162,12 +160,12 @@ function VaccinatiesContent() {
           </div>
           <div>
             <h1 className="text-2xl md:text-3xl font-black text-[#1A1A2E] uppercase tracking-tight italic leading-none">
-              {dog?.name || "Laden..."}{" "}
+              {dog?.name || "Cargando..."}{" "}
               <span className="text-[#4FC3F7] not-italic px-1">/</span>{" "}
-              Vaccinaties
+              Vacunas
             </h1>
             <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] mt-2">
-              Gezondheidsstatus & Paspoort van {dog?.name || "je hond"}
+              Estado de salud & Pasaporte de {dog?.name || "tu perro"}
             </p>
           </div>
         </header>
@@ -180,7 +178,7 @@ function VaccinatiesContent() {
           <div className="space-y-4 mb-10">
             {vaccinaties.length === 0 && !isAdding && (
               <p className="text-slate-400 italic text-sm py-10">
-                Geen vaccinaties gevonden voor {dog?.name}.
+                No se encontraron vacunas para {dog?.name}.
               </p>
             )}
             {vaccinaties.map((vac) => {
@@ -203,7 +201,7 @@ function VaccinatiesContent() {
                         {vac.type}
                       </h3>
                       <p className="text-[10px] font-bold text-slate-500 uppercase mt-1">
-                        Geldig tot:{" "}
+                        Válida hasta:{" "}
                         <span
                           className={
                             verlopen
@@ -211,7 +209,7 @@ function VaccinatiesContent() {
                               : "text-[#1A1A2E]"
                           }>
                           {new Date(vac.datum_verloop).toLocaleDateString(
-                            "nl-NL",
+                            "es-ES",
                           )}
                         </span>
                       </p>
@@ -232,7 +230,7 @@ function VaccinatiesContent() {
           <button
             onClick={() => setIsAdding(true)}
             className="w-full py-5 border-2 border-[#4FC3F7] text-[#4FC3F7] font-black uppercase text-xs tracking-[0.2em] rounded-2xl hover:bg-[#4FC3F7] hover:text-white transition-all flex items-center justify-center gap-2">
-            <Plus size={18} /> Nieuwe Vaccinatie Toevoegen
+            <Plus size={18} /> Añadir Nueva Vacuna
           </button>
         ) : (
           <form
@@ -240,20 +238,20 @@ function VaccinatiesContent() {
             className="p-8 bg-white border-2 border-[#4FC3F7] rounded-[2.5rem] space-y-5">
             <div className="flex flex-col gap-2">
               <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">
-                Type Vaccinatie
+                Tipo de Vacuna
               </label>
               <input
                 required
                 value={newVac.type}
                 onChange={(e) => setNewVac({ ...newVac, type: e.target.value })}
-                placeholder="bijv. Rabiës"
+                placeholder="ej. Rabia"
                 className="w-full p-4 bg-slate-50 rounded-xl font-bold outline-none"
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
                 <label className="text-[10px] font-black uppercase text-slate-400">
-                  Datum Gegeven
+                  Fecha de Administración
                 </label>
                 <input
                   type="date"
@@ -267,7 +265,7 @@ function VaccinatiesContent() {
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-[10px] font-black uppercase text-slate-400">
-                  Geldig tot
+                  Válida hasta
                 </label>
                 <input
                   type="date"
@@ -282,10 +280,10 @@ function VaccinatiesContent() {
             </div>
             <div className="flex flex-col gap-2">
               <label className="text-[10px] font-black uppercase text-slate-400">
-                Dierenarts / Kliniek
+                Veterinario / Clínica
               </label>
               <input
-                placeholder="Naam van de kliniek"
+                placeholder="Nombre de la clínica"
                 value={newVac.dierenarts}
                 onChange={(e) =>
                   setNewVac({ ...newVac, dierenarts: e.target.value })
@@ -297,13 +295,13 @@ function VaccinatiesContent() {
               <button
                 type="submit"
                 className="flex-1 py-4 bg-[#1A1A2E] text-white font-black uppercase text-[10px] tracking-widest rounded-xl hover:bg-[#4FC3F7] transition-all">
-                Opslaan
+                Guardar
               </button>
               <button
                 type="button"
                 onClick={() => setIsAdding(false)}
                 className="px-6 py-4 text-slate-400 font-bold uppercase text-[10px]">
-                Annuleer
+                Cancelar
               </button>
             </div>
           </form>

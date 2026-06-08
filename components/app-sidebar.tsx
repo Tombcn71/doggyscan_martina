@@ -23,13 +23,13 @@ import {
 } from "@/components/ui/sidebar";
 
 const menuItems = [
-  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-  { title: "Nieuwe Scan", url: "/dashboard/scan", icon: PlusCircle },
-  { title: "Dossier", url: "/dashboard/dossier", icon: History },
-  { title: "Vaccinaties", url: "/dashboard/vaccinaties", icon: History },
-  { title: "Medicatie", url: "/dashboard/medicatie", icon: History },
-  { title: "Profiel", url: "/dashboard/profiel", icon: PawPrint },
-  { title: "Instellingen", url: "/dashboard/instellingen", icon: Settings },
+  { title: "Panel", url: "/dashboard", icon: LayoutDashboard },
+  { title: "Nuevo Escaneo", url: "/dashboard/scan", icon: PlusCircle },
+  { title: "Expediente", url: "/dashboard/dossier", icon: History },
+  { title: "Vacunas", url: "/dashboard/vaccinaties", icon: History },
+  { title: "Medicación", url: "/dashboard/medicatie", icon: History },
+  { title: "Perfil", url: "/dashboard/profiel", icon: PawPrint },
+  { title: "Ajustes", url: "/dashboard/instellingen", icon: Settings },
 ];
 
 function SidebarContentInternal() {
@@ -56,7 +56,7 @@ function SidebarContentInternal() {
           router.replace(`${pathname}?dogId=${eersteHondId}`);
         }
       } catch (err) {
-        console.error("Fout bij ophalen hond:", err);
+        console.error("Error al obtener perro:", err);
       }
     }
     checkAndFillDogId();

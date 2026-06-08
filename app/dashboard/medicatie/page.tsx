@@ -20,7 +20,6 @@ interface Dog {
   image_url?: string;
 }
 
-// --- HOOFD EXPORT (Met de vereiste Suspense wrapper voor Vercel) ---
 export default function MedicijnenPage() {
   return (
     <Suspense
@@ -34,7 +33,6 @@ export default function MedicijnenPage() {
   );
 }
 
-// --- DE WERKELIJKE CONTENT COMPONENT ---
 function MedicatieContent() {
   const searchParams = useSearchParams();
   const dogId = searchParams.get("dogId");
@@ -47,7 +45,7 @@ function MedicatieContent() {
   const [newMed, setNewMed] = useState({
     naam: "",
     dosering: "",
-    frequentie: "1x per dag",
+    frequentie: "1x al día",
     notitie: "",
   });
 
@@ -75,7 +73,7 @@ function MedicatieContent() {
           setDog(dogData);
         }
       } catch (err) {
-        console.error("Data laden mislukt:", err);
+        console.error("Error al cargar datos:", err);
       } finally {
         setLoading(false);
       }
@@ -100,23 +98,23 @@ function MedicatieContent() {
         setNewMed({
           naam: "",
           dosering: "",
-          frequentie: "1x per dag",
+          frequentie: "1x al día",
           notitie: "",
         });
         setIsAdding(false);
       }
     } catch (err) {
-      console.error("Opslaan mislukt:", err);
+      console.error("Error al guardar:", err);
     }
   };
 
   const removeMedicijn = async (id: string) => {
-    if (!confirm("Medicijn verwijderen?")) return;
+    if (!confirm("¿Eliminar medicamento?")) return;
     try {
       const res = await fetch(`/api/medicatie/${id}`, { method: "DELETE" });
       if (res.ok) setMedicijnen(medicijnen.filter((m) => m.id !== id));
     } catch (err) {
-      console.error("Verwijderen mislukt:", err);
+      console.error("Error al eliminar:", err);
     }
   };
 
@@ -126,7 +124,7 @@ function MedicatieContent() {
         <Link
           href={`/dashboard?dogId=${dogId}`}
           className="inline-flex items-center gap-2 text-slate-400 font-bold text-[10px] uppercase tracking-widest hover:text-[#4FC3F7] mb-8 transition-colors">
-          <ArrowLeft size={14} /> Terug naar Dashboard
+          <ArrowLeft size={14} /> Volver al Panel
         </Link>
 
         <header className="mb-10 flex items-center gap-5">
@@ -145,12 +143,12 @@ function MedicatieContent() {
           </div>
           <div>
             <h1 className="text-2xl md:text-3xl font-black text-[#1A1A2E] uppercase tracking-tight italic leading-none">
-              {dog?.name || "Laden..."}{" "}
+              {dog?.name || "Cargando..."}{" "}
               <span className="text-[#4FC3F7] not-italic px-1">/</span>{" "}
-              Medicatie
+              Medicación
             </h1>
             <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] mt-2">
-              Beheer het dagschema van {dog?.name || "je hond"}
+              Gestiona el horario diario de {dog?.name || "tu perro"}
             </p>
           </div>
         </header>
@@ -164,7 +162,7 @@ function MedicatieContent() {
             <div className="p-10 border-2 border-dashed border-slate-100 rounded-[2rem] text-center">
               <Pill className="mx-auto text-slate-200 mb-3" size={32} />
               <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">
-                Geen actieve medicatie voor {dog?.name}
+                No hay medicación activa para {dog?.name}
               </p>
             </div>
           ) : (
@@ -199,7 +197,7 @@ function MedicatieContent() {
           <button
             onClick={() => setIsAdding(true)}
             className="w-full py-5 border-2 border-[#4FC3F7] text-[#4FC3F7] font-black uppercase text-xs tracking-[0.2em] rounded-2xl hover:bg-[#4FC3F7] hover:text-white transition-all flex items-center justify-center gap-2">
-            <Plus size={18} /> Medicijn Toevoegen
+            <Plus size={18} /> Añadir Medicamento
           </button>
         ) : (
           <form
@@ -207,20 +205,20 @@ function MedicatieContent() {
             className="p-8 bg-white border-2 border-[#4FC3F7] rounded-[2.5rem] space-y-6">
             <div className="flex flex-col gap-2">
               <label className="text-[10px] font-black uppercase text-slate-400">
-                Naam Medicijn
+                Nombre del Medicamento
               </label>
               <input
                 required
                 value={newMed.naam}
                 onChange={(e) => setNewMed({ ...newMed, naam: e.target.value })}
-                placeholder="bijv. Apoquel"
+                placeholder="ej. Apoquel"
                 className="w-full p-4 bg-slate-50 rounded-xl font-bold outline-none"
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
                 <label className="text-[10px] font-black uppercase text-slate-400">
-                  Dosering
+                  Dosis
                 </label>
                 <input
                   required
@@ -228,13 +226,13 @@ function MedicatieContent() {
                   onChange={(e) =>
                     setNewMed({ ...newMed, dosering: e.target.value })
                   }
-                  placeholder="bijv. 16mg"
+                  placeholder="ej. 16mg"
                   className="w-full p-4 bg-slate-50 rounded-xl font-bold outline-none"
                 />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-[10px] font-black uppercase text-slate-400">
-                  Frequentie
+                  Frecuencia
                 </label>
                 <select
                   value={newMed.frequentie}
@@ -242,23 +240,23 @@ function MedicatieContent() {
                     setNewMed({ ...newMed, frequentie: e.target.value })
                   }
                   className="w-full p-4 bg-slate-50 rounded-xl font-bold outline-none">
-                  <option value="1x per dag">1x per dag</option>
-                  <option value="2x per dag">2x per dag</option>
-                  <option value="3x per dag">3x per dag</option>
-                  <option value="Wekelijks">Wekelijks</option>
+                  <option value="1x al día">1x al día</option>
+                  <option value="2x al día">2x al día</option>
+                  <option value="3x al día">3x al día</option>
+                  <option value="Semanal">Semanal</option>
                 </select>
               </div>
             </div>
             <div className="flex flex-col gap-2">
               <label className="text-[10px] font-black uppercase text-slate-400">
-                Notitie / Instructie
+                Nota / Instrucción
               </label>
               <textarea
                 value={newMed.notitie}
                 onChange={(e) =>
                   setNewMed({ ...newMed, notitie: e.target.value })
                 }
-                placeholder="bijv. Innemen met wat voer"
+                placeholder="ej. Tomar con algo de comida"
                 className="w-full p-4 bg-slate-50 rounded-xl font-bold outline-none h-20 resize-none"
               />
             </div>
@@ -266,13 +264,13 @@ function MedicatieContent() {
               <button
                 type="submit"
                 className="flex-1 py-4 bg-[#1A1A2E] text-white font-black uppercase text-[10px] tracking-widest rounded-xl hover:bg-[#4FC3F7] transition-all">
-                Opslaan
+                Guardar
               </button>
               <button
                 type="button"
                 onClick={() => setIsAdding(false)}
                 className="px-6 py-4 text-slate-400 font-bold uppercase text-[10px] tracking-widest">
-                Annuleer
+                Cancelar
               </button>
             </div>
           </form>

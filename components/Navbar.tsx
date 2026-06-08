@@ -33,17 +33,17 @@ export default function Navbar() {
               </span>
             </div>
             <span className="text-[10px] font-black text-black uppercase tracking-[0.2em] ml-[48px]">
-              Betaversie
+              Versión Beta
             </span>
           </Link>
 
           {!isDashboard && (
             <nav className="hidden md:flex items-center gap-8 text-slate-500 font-bold text-xs uppercase tracking-widest">
               <a href="#features" className="hover:text-[#4FC3F7]">
-                Features
+                Funciones
               </a>
               <a href="#pricing" className="hover:text-[#4FC3F7]">
-                Prijzen
+                Precios
               </a>
               <a href="#faq" className="hover:text-[#4FC3F7]">
                 FAQ
@@ -57,11 +57,11 @@ export default function Navbar() {
                 <Link
                   href="/signin?redirect_url=/dashboard"
                   className="font-bold text-slate-700 text-xs uppercase hover:text-[#4FC3F7]">
-                  Inloggen
+                  Iniciar sesión
                 </Link>
                 <Link href="/signup?redirect_url=/onboarding">
                   <Button className="bg-[#1A1A2E] hover:bg-[#4FC3F7] text-white px-6 h-11 rounded-xl font-bold uppercase text-[10px]">
-                    Start gratis week
+                    Comenzar semana gratis
                   </Button>
                 </Link>
               </div>
@@ -77,7 +77,7 @@ export default function Navbar() {
                   <Link
                     href="/signin?redirect_url=/dashboard"
                     className="font-bold text-[10px] uppercase text-slate-700">
-                    Inloggen
+                    Iniciar sesión
                   </Link>
                 </Show>
 
@@ -92,7 +92,7 @@ export default function Navbar() {
                     className="w-full sm:w-80 bg-white">
                     <SheetHeader className="p-6 border-b flex flex-row items-center justify-between">
                       <SheetTitle className="text-[10px] font-black uppercase text-slate-400">
-                        Navigatie
+                        Navegación
                       </SheetTitle>
                       <SheetClose className="p-2">
                         <X size={24} />
@@ -103,14 +103,14 @@ export default function Navbar() {
                         <a
                           href="/#features"
                           className="text-xl font-bold uppercase">
-                          Features
+                          Funciones
                         </a>
                       </SheetClose>
                       <SheetClose asChild>
                         <a
                           href="/#pricing"
                           className="text-xl font-bold uppercase">
-                          Prijzen
+                          Precios
                         </a>
                       </SheetClose>
                       <SheetClose asChild>
@@ -122,8 +122,8 @@ export default function Navbar() {
                         <SheetClose asChild>
                           <Link href="/signup?redirect_url=/onboarding">
                             <Button className="w-full bg-[#1A1A2E] text-white h-14 rounded-2xl font-bold uppercase">
-                              <Sparkles size={16} className="mr-2" /> Start
-                              gratis week
+                              <Sparkles size={16} className="mr-2" /> Comenzar
+                              semana gratis
                             </Button>
                           </Link>
                         </SheetClose>
