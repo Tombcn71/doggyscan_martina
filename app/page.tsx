@@ -12,7 +12,7 @@ import Faq from "@/components/Faq";
 const features = [
   {
     icon: "🤕",
-    title: "dolor Signalen",
+    title: "doloro Signalen",
     desc: "AI-analyse van de gezichtsuitdrukking voor acute pijn.",
   },
   {
